@@ -3,10 +3,6 @@
 import { Navigate } from "react-router";
 import MyLayout from "../Layout/Layout";
 
-// useEffect(()=>{
-//     if(localStorage){
-//     }
-// }, [])
 
 const ProtectedRoutes = ({ children, }) => {
     const isLoggedIn = localStorage?.getItem("isLoggedIn");
