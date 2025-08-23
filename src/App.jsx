@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./components/Routes/ProtectedRoutes";
 import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
 function App() {
   const router = createBrowserRouter([
     {
@@ -19,6 +20,14 @@ function App() {
     { path: "/reset-password", element: <h1>reset-password</h1> },
     { path: "/about-us", element: <h1>about-us</h1> },
     { path: "/contact-us", element: <h1>contact-us</h1> },
+    {
+      path: "/products",
+      element: (
+        <ProtectedRoutes>
+          <Products />
+        </ProtectedRoutes>
+      ),
+    },
     {
       path: "/todos",
       element: (

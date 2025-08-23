@@ -10,6 +10,8 @@ import { Avatar, Button, Dropdown, Layout, Menu } from "antd";
 import { useNavigate } from "react-router";
 const { Header, Sider, Content } = Layout;
 
+import myLogo from '../../assets/images (1).png'
+
 const MyLayout = ({ children }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -51,6 +53,8 @@ const MyLayout = ({ children }) => {
     <Layout className="!min-h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
+        {/* <img src={myLogo} className="w-[190px] h-16" /> */}
+        <h3 className="bg-white text-3xl font-bold text-center text-blue-900 rounded-md my-3 p-1">My App</h3>
         <Menu
           theme="dark"
           mode="inline"
@@ -60,11 +64,13 @@ const MyLayout = ({ children }) => {
               key: "1",
               icon: <UserOutlined />,
               label: "Dashboard",
+              onClick: () => navigate("/")
             },
             {
               key: "2",
               icon: <VideoCameraOutlined />,
-              label: "Todos",
+              label: "Products",
+              onClick: () => navigate("/products")
             },
           ]}
         />
