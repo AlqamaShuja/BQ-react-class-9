@@ -4,9 +4,12 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card, Rate, Tag } from "antd";
+import { useNavigate } from "react-router";
+
 const { Meta } = Card;
 
 const ProductCard = ({ data }) => {
+  const navigate = useNavigate();
   return (
     <div className="p-4">
       <Card
@@ -27,7 +30,7 @@ const ProductCard = ({ data }) => {
           </Tag>
 
           {/* Title */}
-          <h2 className="text-lg font-semibold text-gray-800 truncate">
+          <h2 className="text-lg font-semibold text-gray-800 truncate" onClick={() => navigate(`/products/${data?.id}`)}>
             {data.title}
           </h2>
 

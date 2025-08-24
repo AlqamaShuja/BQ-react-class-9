@@ -72,6 +72,12 @@ const MyLayout = ({ children }) => {
               label: "Products",
               onClick: () => navigate("/products")
             },
+            {
+              key: "3",
+              icon: <VideoCameraOutlined />,
+              label: "Calculator",
+              onClick: () => navigate("/calculator")
+            },
           ]}
         />
       </Sider>

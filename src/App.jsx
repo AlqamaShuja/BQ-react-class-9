@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import ProtectedRoutes from "./components/Routes/ProtectedRoutes";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
+import ProductsDetails from "./pages/ProductsDetails";
+import Calculator from "./pages/Calculator";
 function App() {
   const router = createBrowserRouter([
     {
@@ -25,6 +27,24 @@ function App() {
       element: (
         <ProtectedRoutes>
           <Products />
+        </ProtectedRoutes>
+      ),
+      // children: [
+      // ],
+    },
+    {
+      path: "/products/:id",
+      element: (
+        <ProtectedRoutes>
+          <ProductsDetails />
+        </ProtectedRoutes>
+      ),
+    },
+    {
+      path: "/calculator",
+      element: (
+        <ProtectedRoutes>
+          <Calculator />
         </ProtectedRoutes>
       ),
     },

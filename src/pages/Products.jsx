@@ -9,20 +9,37 @@ const Products = () => {
   const [isShowProdModal, setIsShowProdModal] = useState(false);
 
   function getProducts() {
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // const oldProd = localStorage.getItem("products");
+    // if(!oldProd){
+      axios
+        .get("https://fakestoreapi.com/products")
+        .then((res) => {
+          console.log(res.data);
+          // localStorage.setItem("products", JSON.stringify(res.data))
+          setProducts(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    // }
+    // else {
+    //   const parsedProd = JSON.parse(oldProd);
+    //   setProducts(parsedProd)
+    // }
   }
 
   useEffect(() => {
     getProducts();
   }, []);
+
+  const addProducts = (newProd) => {
+    console.log(newProd);
+    // this is not the good way
+    const updatedProducts = [newProd, ...products];
+    // localStorage.setItem("products", JSON.stringify(updatedProducts))
+    setProducts(updatedProducts);
+    setIsShowProdModal(false);
+  }
 
   return (
     <div>
@@ -39,7 +56,7 @@ const Products = () => {
       </div>
       <AddProductModal
         open={isShowProdModal} // true || false 
-        onSuccess={() => setIsShowProdModal(false)}
+        addProducts={addProducts}
         onCancel={() => setIsShowProdModal(false)}
       />
     </div>

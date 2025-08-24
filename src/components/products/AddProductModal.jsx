@@ -1,52 +1,68 @@
 import { Form, Input, InputNumber, Select, Modal, Button } from "antd";
+import axios from "axios";
+import BlueButton from "../button/BlueButton";
+import { useState } from "react";
 // import 'antd/dist/reset.css';
 
 const { TextArea } = Input;
 const { Option } = Select;
 
-const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
+const AddProductModal = ({ open = false, addProducts, onCancel }) => {
   const [form] = Form.useForm();
+  const [newProd, setNewProd] = useState({ title: "", category: '' })
 
-  const handleOk = () => {
-
+  const handleAddProd = () => {
     form
       .validateFields()
       .then((values) => {
         // Structure the form data to match the product object
-        // const productData = {
-        //   title: values.title,
-        //   price: values.price,
-        //   description: values.description,
-        //   category: values.category,
-        //   image: values.image,
-        //   rating: {
-        //     rate: values.rating_rate,
-        //     count: values.rating_count,
-        //   },
-        // };
-        // onSuccess(productData); // Pass the data to the parent component
-        // form.resetFields(); // Reset form after successful submission
-        console.log(values);
-        
+        const productData = {
+          title: values.title,
+          price: values.price,
+          description: values.description,
+          category: values.category,
+          image: values.image,
+          rating: {
+            rate: values.rating_rate,
+            count: values.rating_count,
+          },
+        };
+        addProducts(productData); // Pass the data to the parent component
+        form.resetFields(); // Reset form after successful submission
+        // console.log(productData);
+        setNewProd({ title: "", category: '' })
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
 
+  const handleCancel = () => {
+    form.resetFields(); // Reset form on cancel
+    onCancel();
+  };
+
   return (
     <Modal
       title="Add New Product"
       open={open}
-      onOk={handleOk}
-      onCancel={() => {
-        form.resetFields(); // Reset form on cancel
-        onCancel();
-      }}
-      closable
-      okText="Add Product"
-      cancelText="Cancel"
+      // onOk={handleOk}
+      onCancel={handleCancel}
+      // closable
+      // okText="Add Product"
+      // cancelText="Cancel"
       className="max-w-lg" // Tailwind for responsive modal width
+      footer={[
+        <div className="flex gap-3 justify-end">
+          <BlueButton
+            onClick={handleCancel}
+            className="from-gray-100 to-gray-200 hover:from-gray-100 hover:to-gray-300 !text-black"
+          >
+            Cancel
+          </BlueButton>
+          <BlueButton onClick={handleAddProd}>Add Product</BlueButton>
+        </div>,
+      ]}
     >
       <Form
         form={form}
@@ -61,7 +77,9 @@ const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
         <Form.Item
           name="title"
           label="Product Title"
-          rules={[{ required: true, message: "Please enter the product title" }]}
+          rules={[
+            { required: true, message: "Please enter the product title" },
+          ]}
         >
           <Input
             placeholder="Enter product title"
@@ -74,7 +92,11 @@ const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
           label="Price"
           rules={[
             { required: true, message: "Please enter the price" },
-            { type: "number", min: 0, message: "Price must be a positive number" },
+            {
+              type: "number",
+              min: 0,
+              message: "Price must be a positive number",
+            },
           ]}
         >
           <InputNumber
@@ -115,10 +137,7 @@ const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
           label="Image URL"
           rules={[{ required: true, message: "Please enter the image URL" }]}
         >
-          <Input
-            placeholder="Enter image URL"
-            className="w-full rounded-md"
-          />
+          <Input placeholder="Enter image URL" className="w-full rounded-md" />
         </Form.Item>
 
         <Form.Item
@@ -126,7 +145,12 @@ const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
           label="Rating (Stars)"
           rules={[
             { required: true, message: "Please enter the rating" },
-            { type: "number", min: 0, max: 5, message: "Rating must be between 0 and 5" },
+            {
+              type: "number",
+              min: 0,
+              max: 5,
+              message: "Rating must be between 0 and 5",
+            },
           ]}
         >
           <InputNumber
@@ -141,7 +165,11 @@ const AddProductModal = ({ open = false, onSuccess, onCancel }) => {
           label="Rating Count"
           rules={[
             { required: true, message: "Please enter the rating count" },
-            { type: "number", min: 0, message: "Rating count must be a positive number" },
+            {
+              type: "number",
+              min: 0,
+              message: "Rating count must be a positive number",
+            },
           ]}
         >
           <InputNumber
